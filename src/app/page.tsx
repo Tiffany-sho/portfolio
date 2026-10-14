@@ -1,69 +1,208 @@
 import Image from "next/image";
+import { EmailLink } from "@/components/EmailLink";
+import { plans, priceNotes, profile, services, site, steps, works } from "@/content/site";
+
+const nav = [
+  { href: "#works", label: "実績" },
+  { href: "#price", label: "料金" },
+  { href: "#contact", label: "お問い合わせ" },
+];
+
+function SectionTitle({ en, ja }: { en: string; ja: string }) {
+  return (
+    <div className="mb-8">
+      <p className="text-xs font-medium tracking-[0.2em] text-accent">{en}</p>
+      <h2 className="mt-1 text-2xl font-bold text-ink sm:text-3xl">{ja}</h2>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <>
+      <header className="sticky top-0 z-10 border-b border-line bg-background/90 backdrop-blur">
+        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6">
+          <a href="#" className="font-bold text-ink">
+            {site.nameJa}
+          </a>
+          <nav aria-label="ページ内リンク">
+            <ul className="flex gap-4 text-sm text-muted sm:gap-6">
+              {nav.map((item) => (
+                <li key={item.href}>
+                  <a href={item.href} className="hover:text-ink">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main className="flex-1">
+        <section className="mx-auto max-w-5xl px-4 pt-16 pb-20 sm:px-6 sm:pt-24 sm:pb-28">
+          <p className="text-sm font-medium text-accent">{site.role}</p>
+          <h1 className="mt-4 text-[1.9rem] leading-snug font-bold text-ink sm:text-5xl sm:leading-tight">
+            お店の魅力が、
+            <br />
+            {/* スマホ幅で「ホーム/ページ」の途中で改行されないよう、句ごとに折り返す */}
+            <span className="inline-block">ちゃんと伝わる</span>
+            <span className="inline-block">ホームページを。</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+          <p className="mt-6 max-w-xl leading-relaxed text-muted">{site.description}</p>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="#contact"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-7 font-medium text-accent-ink hover:opacity-90"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
+              メールで相談する（無料）
+            </a>
             <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="#works"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-line bg-surface px-7 font-medium text-ink hover:border-ink"
             >
-              Learning
-            </a>{" "}
-            center.
+              制作実績を見る
+            </a>
+          </div>
+          <p className="mt-10 text-sm text-muted">
+            {site.nameJa}（{site.nameEn}）
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        </section>
+
+        <section id="works" className="scroll-mt-14 border-t border-line bg-surface">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
+            <SectionTitle en="WORKS" ja="制作実績" />
+            <div className="grid gap-12 md:grid-cols-2 md:gap-8">
+              {works.map((work) => (
+                <article key={work.title}>
+                  <a
+                    href={work.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block overflow-hidden rounded-lg border border-line"
+                  >
+                    <Image
+                      src={work.image}
+                      alt={work.imageAlt}
+                      width={1280}
+                      height={800}
+                      sizes="(min-width: 768px) 480px, 100vw"
+                      className="h-auto w-full transition-transform duration-300 hover:scale-[1.02]"
+                    />
+                  </a>
+                  <p className="mt-5 text-xs font-medium text-accent">{work.kind}</p>
+                  <h3 className="mt-1 text-xl font-bold text-ink">{work.title}</h3>
+                  <p className="mt-3 leading-relaxed text-muted">{work.summary}</p>
+                  <ul className="mt-4 space-y-1 text-sm text-foreground">
+                    {work.points.map((point) => (
+                      <li key={point} className="flex gap-2">
+                        <span aria-hidden className="text-accent">
+                          ・
+                        </span>
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                  <ul className="mt-4 flex flex-wrap gap-2" aria-label="使用技術">
+                    {work.stack.map((tech) => (
+                      <li key={tech} className="rounded-full bg-background px-3 py-1 text-xs text-muted">
+                        {tech}
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href={work.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-block text-sm font-medium text-accent underline underline-offset-4"
+                  >
+                    サイトを見る
+                  </a>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-line">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
+            <SectionTitle en="SERVICE" ja="できること" />
+            <div className="grid gap-4 sm:grid-cols-2">
+              {services.map((service) => (
+                <div key={service.title} className="rounded-lg border border-line bg-surface p-6">
+                  <h3 className="font-bold text-ink">{service.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{service.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="price" className="scroll-mt-14 border-t border-line bg-surface">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
+            <SectionTitle en="PRICE" ja="料金の目安" />
+            <dl className="divide-y divide-line border-y border-line">
+              {plans.map((plan) => (
+                <div key={plan.name} className="flex flex-col gap-1 py-5 sm:flex-row sm:items-baseline sm:gap-6">
+                  <dt className="font-bold text-ink sm:w-56">{plan.name}</dt>
+                  <dd className="text-2xl font-bold text-accent sm:w-36">{plan.price}</dd>
+                  <dd className="text-sm text-muted">{plan.note}</dd>
+                </div>
+              ))}
+            </dl>
+            <ul className="mt-5 space-y-1 text-sm text-muted">
+              {priceNotes.map((note) => (
+                <li key={note}>※ {note}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="border-t border-line">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
+            <SectionTitle en="FLOW" ja="制作の流れ" />
+            <ol className="grid gap-4 md:grid-cols-5">
+              {steps.map((step, i) => (
+                <li key={step.title} className="rounded-lg border border-line bg-surface p-5">
+                  <p className="text-sm font-bold text-accent">STEP {i + 1}</p>
+                  <h3 className="mt-1 font-bold text-ink">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{step.body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="border-t border-line bg-surface">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
+            <SectionTitle en="PROFILE" ja="プロフィール" />
+            <p className="text-lg font-bold text-ink">
+              {site.nameJa}
+              <span className="ml-3 text-sm font-normal text-muted">{site.nameEn}</span>
+            </p>
+            <div className="mt-4 max-w-2xl space-y-3 leading-relaxed text-muted">
+              {profile.lines.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="scroll-mt-14 bg-ink text-white">
+          <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6">
+            <p className="text-xs font-medium tracking-[0.2em] text-white/70">CONTACT</p>
+            <h2 className="mt-1 text-2xl font-bold sm:text-3xl">お問い合わせ</h2>
+            <p className="mx-auto mt-5 max-w-xl leading-relaxed text-white/80">
+              「まだ何も決まっていない」段階でも大丈夫です。ご相談・お見積もりは無料です。
+            </p>
+            <EmailLink className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium break-all text-ink hover:bg-white/90" />
+          </div>
+        </section>
       </main>
-    </div>
+
+      <footer className="bg-ink pb-8 text-center text-xs text-white/60">
+        © 2026 {site.nameEn}
+      </footer>
+    </>
   );
 }
