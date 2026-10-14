@@ -2,155 +2,204 @@ import Image from "next/image";
 import { EmailLink } from "@/components/EmailLink";
 import { plans, priceNotes, profile, services, site, steps, works } from "@/content/site";
 
-const nav = [
-  { href: "#works", label: "実績" },
-  { href: "#price", label: "料金" },
-  { href: "#contact", label: "お問い合わせ" },
-];
+const sections = [
+  { id: "works", en: "Works", ja: "制作実績" },
+  { id: "service", en: "Service", ja: "できること" },
+  { id: "price", en: "Price", ja: "料金の目安" },
+  { id: "flow", en: "Flow", ja: "制作の流れ" },
+  { id: "profile", en: "Profile", ja: "プロフィール" },
+  { id: "contact", en: "Contact", ja: "お問い合わせ" },
+] as const;
 
-function SectionTitle({ en, ja }: { en: string; ja: string }) {
+type SectionId = (typeof sections)[number]["id"];
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+function SectionHead({ id }: { id: SectionId }) {
+  const index = sections.findIndex((s) => s.id === id);
+  const section = sections[index];
   return (
-    <div className="mb-8">
-      <p className="text-xs font-medium tracking-[0.2em] text-accent">{en}</p>
-      <h2 className="mt-1 text-2xl font-bold text-ink sm:text-3xl">{ja}</h2>
-    </div>
+    <header className="mb-12 flex items-baseline gap-4 border-t border-ink pt-4 sm:mb-16">
+      <span className="font-display text-sm tracking-widest text-muted">{pad(index + 1)}</span>
+      <h2 className="flex flex-1 flex-wrap items-baseline gap-x-4 gap-y-1">
+        <span className="font-display text-4xl italic leading-none sm:text-6xl">{section.en}</span>
+        <span className="font-mincho text-sm tracking-[0.2em] text-muted">{section.ja}</span>
+      </h2>
+    </header>
   );
 }
 
 export default function Home() {
   return (
     <>
-      <header className="sticky top-0 z-10 border-b border-line bg-background/90 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6">
-          <a href="#" className="font-bold text-ink">
-            {site.nameJa}
+      <header className="sticky top-0 z-10 bg-paper/90 backdrop-blur">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between border-b border-rule px-4 sm:px-8">
+          <a href="#" className="font-display text-lg tracking-[0.25em] uppercase">
+            {site.nameEn}
           </a>
           <nav aria-label="ページ内リンク">
-            <ul className="flex gap-4 text-sm text-muted sm:gap-6">
-              {nav.map((item) => (
-                <li key={item.href}>
-                  <a href={item.href} className="hover:text-ink">
-                    {item.label}
-                  </a>
-                </li>
-              ))}
+            <ul className="flex gap-5 font-display text-base sm:gap-8">
+              {sections
+                .filter((s) => s.id === "works" || s.id === "price" || s.id === "contact")
+                .map((s) => (
+                  <li key={s.id}>
+                    <a href={`#${s.id}`} className="hover:text-accent">
+                      {s.en}
+                    </a>
+                  </li>
+                ))}
             </ul>
           </nav>
         </div>
       </header>
 
-      <main className="flex-1">
-        <section className="mx-auto max-w-5xl px-4 pt-16 pb-20 sm:px-6 sm:pt-24 sm:pb-28">
-          <p className="text-sm font-medium text-accent">{site.role}</p>
-          <h1 className="mt-4 text-[1.9rem] leading-snug font-bold text-ink sm:text-5xl sm:leading-tight">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-8">
+        {/* Hero */}
+        <section className="pt-10 pb-20 sm:pt-16 sm:pb-28">
+          <div className="flex items-center justify-between font-display text-sm tracking-[0.2em] text-muted uppercase">
+            <span>
+              Web Design<span className="hidden sm:inline"> &amp; Development</span>
+            </span>
+            <span>Portfolio</span>
+          </div>
+          <div className="mt-3 border-t border-ink" />
+
+          <h1 className="mt-14 font-mincho text-[2.6rem] leading-[1.35] font-semibold tracking-wide sm:mt-20 sm:text-7xl sm:leading-[1.3] lg:text-[5.5rem]">
             お店の魅力が、
             <br />
-            {/* スマホ幅で「ホーム/ページ」の途中で改行されないよう、句ごとに折り返す */}
+            {/* 句の途中で改行されないよう、句ごとに折り返す */}
             <span className="inline-block">ちゃんと伝わる</span>
-            <span className="inline-block">ホームページを。</span>
+            <span className="inline-block">
+              ホームページを<span className="text-accent">。</span>
+            </span>
           </h1>
-          <p className="mt-6 max-w-xl leading-relaxed text-muted">{site.description}</p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#contact"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-7 font-medium text-accent-ink hover:opacity-90"
-            >
-              メールで相談する（無料）
-            </a>
-            <a
-              href="#works"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-line bg-surface px-7 font-medium text-ink hover:border-ink"
-            >
-              制作実績を見る
-            </a>
+
+          <div className="mt-14 grid gap-10 border-t border-rule pt-8 sm:mt-20 md:grid-cols-12">
+            <p className="text-[0.95rem] leading-loose text-muted md:col-span-6">{site.description}</p>
+            <div className="flex flex-col items-start gap-4 md:col-span-5 md:col-start-8 md:items-end">
+              <a
+                href="#contact"
+                className="group inline-flex items-center gap-3 border-b border-ink pb-1 font-mincho text-lg"
+              >
+                メールで相談する（無料）
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+              </a>
+              <p className="font-mincho text-sm text-muted">
+                {site.nameJa}
+                <span className="ml-2 font-display">{site.nameEn}</span>
+              </p>
+            </div>
           </div>
-          <p className="mt-10 text-sm text-muted">
-            {site.nameJa}（{site.nameEn}）
-          </p>
+
+          {/* 目次 */}
+          <nav aria-label="目次" className="mt-16 sm:mt-20">
+            <ol className="grid grid-cols-2 border-t border-rule sm:grid-cols-3 lg:grid-cols-6">
+              {sections.map((s, i) => (
+                <li key={s.id} className="border-b border-rule">
+                  <a
+                    href={`#${s.id}`}
+                    className="flex items-baseline gap-3 py-4 pr-4 hover:text-accent"
+                  >
+                    <span className="font-display text-xs text-muted">{pad(i + 1)}</span>
+                    <span className="font-display text-xl italic">{s.en}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
         </section>
 
-        <section id="works" className="scroll-mt-14 border-t border-line bg-surface">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
-            <SectionTitle en="WORKS" ja="制作実績" />
-            <div className="grid gap-12 md:grid-cols-2 md:gap-8">
-              {works.map((work) => (
-                <article key={work.title}>
-                  <a
-                    href={work.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block overflow-hidden rounded-lg border border-line"
-                  >
-                    <Image
-                      src={work.image}
-                      alt={work.imageAlt}
-                      width={1280}
-                      height={800}
-                      sizes="(min-width: 768px) 480px, 100vw"
-                      className="h-auto w-full transition-transform duration-300 hover:scale-[1.02]"
-                    />
-                  </a>
-                  <p className="mt-5 text-xs font-medium text-accent">{work.kind}</p>
-                  <h3 className="mt-1 text-xl font-bold text-ink">{work.title}</h3>
-                  <p className="mt-3 leading-relaxed text-muted">{work.summary}</p>
-                  <ul className="mt-4 space-y-1 text-sm text-foreground">
+        {/* Works */}
+        <section id="works" className="scroll-mt-14 pb-24 sm:pb-32">
+          <SectionHead id="works" />
+          <div className="space-y-20 sm:space-y-28">
+            {works.map((work, i) => (
+              <article key={work.title} className="grid gap-8 md:grid-cols-12 md:gap-10">
+                <a
+                  href={work.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group block overflow-hidden md:col-span-8 ${i % 2 === 1 ? "md:order-2" : ""}`}
+                >
+                  <Image
+                    src={work.image}
+                    alt={work.imageAlt}
+                    width={1280}
+                    height={800}
+                    sizes="(min-width: 1152px) 720px, (min-width: 768px) 66vw, 100vw"
+                    className="h-auto w-full grayscale-[15%] transition duration-500 group-hover:scale-[1.02] group-hover:grayscale-0"
+                  />
+                </a>
+                <div className="flex flex-col md:col-span-4">
+                  <p className="font-display text-6xl leading-none text-accent italic">No.{pad(i + 1)}</p>
+                  <h3 className="mt-6 font-mincho text-3xl font-semibold">{work.title}</h3>
+                  <p className="mt-2 font-display text-base tracking-wider text-muted italic">
+                    {work.kindEn}
+                    <span className="ml-2 font-sans text-xs not-italic">／{work.kind}</span>
+                  </p>
+                  <p className="mt-6 text-[0.95rem] leading-loose">{work.summary}</p>
+                  <ul className="mt-5 space-y-2 border-t border-rule pt-5 text-sm text-muted">
                     {work.points.map((point) => (
                       <li key={point} className="flex gap-2">
-                        <span aria-hidden className="text-accent">
-                          ・
-                        </span>
+                        <span aria-hidden>—</span>
                         {point}
                       </li>
                     ))}
                   </ul>
-                  <ul className="mt-4 flex flex-wrap gap-2" aria-label="使用技術">
-                    {work.stack.map((tech) => (
-                      <li key={tech} className="rounded-full bg-background px-3 py-1 text-xs text-muted">
-                        {tech}
-                      </li>
-                    ))}
-                  </ul>
+                  <p className="mt-5 font-display text-sm tracking-wider text-muted" aria-label="使用技術">
+                    {work.stack.join(" / ")}
+                  </p>
                   <a
                     href={work.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-block text-sm font-medium text-accent underline underline-offset-4"
+                    className="mt-6 self-start border-b border-ink pb-0.5 font-display text-lg italic hover:text-accent hover:border-accent"
                   >
-                    サイトを見る
+                    Visit site →
                   </a>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-line">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
-            <SectionTitle en="SERVICE" ja="できること" />
-            <div className="grid gap-4 sm:grid-cols-2">
-              {services.map((service) => (
-                <div key={service.title} className="rounded-lg border border-line bg-surface p-6">
-                  <h3 className="font-bold text-ink">{service.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{service.body}</p>
                 </div>
-              ))}
-            </div>
+              </article>
+            ))}
           </div>
         </section>
 
-        <section id="price" className="scroll-mt-14 border-t border-line bg-surface">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
-            <SectionTitle en="PRICE" ja="料金の目安" />
-            <dl className="divide-y divide-line border-y border-line">
+        {/* Service */}
+        <section id="service" className="scroll-mt-14 pb-24 sm:pb-32">
+          <SectionHead id="service" />
+          <ol className="grid border-t border-rule md:grid-cols-2">
+            {services.map((service, i) => (
+              <li
+                key={service.title}
+                className={`border-b border-rule py-8 md:px-8 ${i % 2 === 0 ? "md:border-r md:pl-0" : "md:pr-0"}`}
+              >
+                <p className="font-display text-sm text-muted">{pad(i + 1)}</p>
+                <h3 className="mt-2 font-mincho text-2xl font-semibold">{service.title}</h3>
+                <p className="mt-3 text-[0.95rem] leading-loose text-muted">{service.body}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Price — 品書き風 */}
+        <section id="price" className="scroll-mt-14 pb-24 sm:pb-32">
+          <SectionHead id="price" />
+          <div className="bg-paper-deep px-5 py-10 sm:px-14 sm:py-14">
+            <p className="text-center font-mincho text-sm tracking-[0.5em] text-muted">お品書き</p>
+            <ul className="mt-10 space-y-10">
               {plans.map((plan) => (
-                <div key={plan.name} className="flex flex-col gap-1 py-5 sm:flex-row sm:items-baseline sm:gap-6">
-                  <dt className="font-bold text-ink sm:w-56">{plan.name}</dt>
-                  <dd className="text-2xl font-bold text-accent sm:w-36">{plan.price}</dd>
-                  <dd className="text-sm text-muted">{plan.note}</dd>
-                </div>
+                <li key={plan.name}>
+                  <p className="flex items-baseline gap-3">
+                    <span className="font-mincho text-lg font-semibold sm:text-2xl">{plan.name}</span>
+                    <span aria-hidden className="mb-1.5 flex-1 border-b border-dotted border-ink/40" />
+                    <span className="font-mincho text-xl font-semibold text-accent sm:text-3xl">{plan.price}</span>
+                  </p>
+                  <p className="mt-2 text-sm text-muted">{plan.note}</p>
+                </li>
               ))}
-            </dl>
-            <ul className="mt-5 space-y-1 text-sm text-muted">
+            </ul>
+            <ul className="mt-12 space-y-1 border-t border-rule pt-6 text-xs leading-relaxed text-muted sm:text-sm">
               {priceNotes.map((note) => (
                 <li key={note}>※ {note}</li>
               ))}
@@ -158,29 +207,34 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-line">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
-            <SectionTitle en="FLOW" ja="制作の流れ" />
-            <ol className="grid gap-4 md:grid-cols-5">
-              {steps.map((step, i) => (
-                <li key={step.title} className="rounded-lg border border-line bg-surface p-5">
-                  <p className="text-sm font-bold text-accent">STEP {i + 1}</p>
-                  <h3 className="mt-1 font-bold text-ink">{step.title}</h3>
+        {/* Flow */}
+        <section id="flow" className="scroll-mt-14 pb-24 sm:pb-32">
+          <SectionHead id="flow" />
+          <ol className="grid border-t border-ink md:grid-cols-5">
+            {steps.map((step, i) => (
+              <li
+                key={step.title}
+                className="grid grid-cols-[3.5rem_1fr] gap-x-2 border-b border-rule py-6 md:block md:border-r md:border-b-0 md:px-5 md:py-8 md:first:pl-0 md:last:border-r-0"
+              >
+                <p className="font-display text-4xl leading-none text-accent italic md:text-5xl">{i + 1}</p>
+                <div>
+                  <h3 className="font-mincho text-xl font-semibold md:mt-6">{step.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{step.body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
+                </div>
+              </li>
+            ))}
+          </ol>
         </section>
 
-        <section className="border-t border-line bg-surface">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
-            <SectionTitle en="PROFILE" ja="プロフィール" />
-            <p className="text-lg font-bold text-ink">
-              {site.nameJa}
-              <span className="ml-3 text-sm font-normal text-muted">{site.nameEn}</span>
-            </p>
-            <div className="mt-4 max-w-2xl space-y-3 leading-relaxed text-muted">
+        {/* Profile */}
+        <section id="profile" className="scroll-mt-14 pb-24 sm:pb-32">
+          <SectionHead id="profile" />
+          <div className="grid gap-10 md:grid-cols-12">
+            <div className="md:col-span-4">
+              <p className="font-mincho text-4xl font-semibold tracking-widest">{site.nameJa}</p>
+              <p className="mt-2 font-display text-xl tracking-[0.2em] text-muted uppercase">{site.nameEn}</p>
+            </div>
+            <div className="space-y-5 text-[0.95rem] leading-loose md:col-span-7 md:col-start-6">
               {profile.lines.map((line) => (
                 <p key={line}>{line}</p>
               ))}
@@ -188,20 +242,28 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="scroll-mt-14 bg-ink text-white">
-          <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6">
-            <p className="text-xs font-medium tracking-[0.2em] text-white/70">CONTACT</p>
-            <h2 className="mt-1 text-2xl font-bold sm:text-3xl">お問い合わせ</h2>
-            <p className="mx-auto mt-5 max-w-xl leading-relaxed text-white/80">
-              「まだ何も決まっていない」段階でも大丈夫です。ご相談・お見積もりは無料です。
-            </p>
-            <EmailLink className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-white px-7 font-medium break-all text-ink hover:bg-white/90" />
+        {/* Contact */}
+        <section id="contact" className="scroll-mt-14 pb-24 sm:pb-32">
+          <SectionHead id="contact" />
+          <p className="font-mincho text-3xl leading-snug font-semibold sm:text-5xl sm:leading-snug">
+            <span className="inline-block">ご相談、</span>
+            <span className="inline-block">お待ちしています。</span>
+          </p>
+          <p className="mt-6 max-w-xl text-[0.95rem] leading-loose text-muted">
+            「まだ何も決まっていない」段階でも大丈夫です。ご相談・お見積もりは無料です。
+          </p>
+          <div className="mt-12 border-y border-ink py-8">
+            <p className="font-display text-sm tracking-[0.2em] text-muted uppercase">Mail</p>
+            <EmailLink className="mt-2 inline-block font-display text-[1.6rem] break-all hover:text-accent sm:text-5xl" />
           </div>
         </section>
       </main>
 
-      <footer className="bg-ink pb-8 text-center text-xs text-white/60">
-        © 2026 {site.nameEn}
+      <footer className="mx-auto w-full max-w-6xl px-4 pb-10 sm:px-8">
+        <div className="flex items-center justify-between border-t border-rule pt-6 font-display text-sm text-muted">
+          <span className="tracking-[0.2em] uppercase">{site.nameEn}</span>
+          <span>© 2026</span>
+        </div>
       </footer>
     </>
   );

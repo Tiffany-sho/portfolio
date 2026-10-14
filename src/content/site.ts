@@ -15,6 +15,7 @@ export const site = {
 export type Work = {
   title: string;
   kind: string;
+  kindEn: string;
   url: string;
   image: string;
   imageAlt: string;
@@ -27,6 +28,7 @@ export const works: Work[] = [
   {
     title: "焼肉 天空",
     kind: "店舗公式サイト",
+    kindEn: "Restaurant Website",
     url: "https://tenkoo-yasu.com/",
     image: "/works/tenkoo.png",
     imageAlt: "焼肉 天空 公式サイトのトップページ",
@@ -38,6 +40,7 @@ export const works: Work[] = [
   {
     title: "Collecie",
     kind: "Webアプリ（自社開発）",
+    kindEn: "Web Application",
     url: "https://www.collecie.com/",
     image: "/works/collecie.png",
     imageAlt: "コインランドリー集金管理アプリ Collecie の紹介ページ",

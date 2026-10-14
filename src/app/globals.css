@@ -1,27 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fbfaf7;
-  --surface: #ffffff;
-  --foreground: #1f2328;
-  --muted: #5b6168;
-  --line: #e6e2da;
-  --accent: #a8481f;
-  --accent-ink: #ffffff;
-  --ink: #1b2a3a;
+  --paper: #f5f2ec;
+  --paper-deep: #ece7de;
+  --ink: #151413;
+  --muted: #6b665e;
+  --rule: rgb(21 20 19 / 0.16);
+  --accent: #9a2b1b;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-line: var(--line);
-  --color-accent: var(--accent);
-  --color-accent-ink: var(--accent-ink);
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
   --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  /* 日本語Webフォントは CSS が約100KB 増え表示を遅らせるため、端末標準の書体を使う */
   --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Noto Sans CJK JP",
     "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", "Noto Serif CJK JP",
+    serif;
+  --font-display: var(--font-cormorant), var(--font-mincho);
 }
 
 html {
@@ -29,10 +29,15 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans);
   /* 游ゴシックは Windows で標準ウェイトが細く掠れるため 500 を基準にする */
   font-weight: 500;
   line-break: strict;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
 }
