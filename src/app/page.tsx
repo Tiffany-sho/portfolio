@@ -151,14 +151,26 @@ export default function Home() {
                   <p className="mt-5 font-display text-sm tracking-wider text-muted" aria-label="使用技術">
                     {work.stack.join(" / ")}
                   </p>
-                  <a
-                    href={work.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 self-start border-b border-ink pb-0.5 font-display text-lg italic hover:text-accent hover:border-accent"
-                  >
-                    Visit site →
-                  </a>
+                  <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+                    <a
+                      href={work.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border-b border-ink pb-0.5 font-display text-lg italic hover:border-accent hover:text-accent"
+                    >
+                      Visit site →
+                    </a>
+                    {work.appStoreUrl && (
+                      <a
+                        href={work.appStoreUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border-b border-ink pb-0.5 font-display text-lg italic hover:border-accent hover:text-accent"
+                      >
+                        App Store →
+                      </a>
+                    )}
+                  </div>
                 </div>
               </article>
             ))}

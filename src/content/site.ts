@@ -17,6 +17,7 @@ export type Work = {
   kind: string;
   kindEn: string;
   url: string;
+  appStoreUrl?: string;
   image: string;
   imageAlt: string;
   summary: string;
@@ -39,14 +40,15 @@ export const works: Work[] = [
   },
   {
     title: "Collecie",
-    kind: "Webアプリ（自社開発）",
-    kindEn: "Web Application",
+    kind: "Webアプリ・iOSアプリ（自社開発）",
+    kindEn: "Web & iOS App",
     url: "https://www.collecie.com/",
+    appStoreUrl: "https://apps.apple.com/jp/app/collecie/id6796202962",
     image: "/works/collecie.png",
     imageAlt: "コインランドリー集金管理アプリ Collecie の紹介ページ",
     summary:
-      "家業のコインランドリーで紙のノートに付けていた集金記録を、スマホで入力・自動集計できるようにしたアプリ。企画から運用まで一人で行っています。",
-    points: ["ログイン・店舗ごとのデータ管理", "売上の自動集計とグラフ表示"],
+      "家業のコインランドリーで紙のノートに付けていた集金記録を、スマホで入力・自動集計できるようにしたアプリ。Web版に加えてiOS版もApp Storeで公開しています。企画から運用まで一人で行っています。",
+    points: ["ログイン・店舗ごとのデータ管理", "売上の自動集計とグラフ表示", "iOS版をApp Storeで公開中"],
     stack: ["Next.js", "React", "Supabase"],
   },
 ];
