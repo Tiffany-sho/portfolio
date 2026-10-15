@@ -79,6 +79,7 @@ export const plans = [
 ];
 
 export const priceNotes = [
+  "金額はすべて税込です。",
   "金額は目安です。内容をうかがってからお見積もりします。",
   "ドメイン（URL）などの維持費は別途かかります。",
 ];
