@@ -49,7 +49,7 @@ export const works: Work[] = [
     summary:
       "家業のコインランドリーで紙のノートに付けていた集金記録を、スマホで入力・自動集計できるようにしたアプリ。Web版に加えてiOS版もApp Storeで公開しています。企画から運用まで一人で行っています。",
     points: ["ログイン・店舗ごとのデータ管理", "売上の自動集計とグラフ表示", "iOS版をApp Storeで公開中"],
-    stack: ["Next.js", "React", "Supabase"],
+    stack: ["Next.js", "React", "Expo（React Native）", "Supabase"],
   },
 ];
 
