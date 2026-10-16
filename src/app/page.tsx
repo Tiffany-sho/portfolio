@@ -114,7 +114,8 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <DeskIllustration className="draw mx-auto w-full max-w-[420px] text-teal" />
+          {/* スマホでは見出しより上（一番上）、PC では右側 */}
+          <DeskIllustration className="draw order-first mx-auto w-full max-w-[300px] text-teal md:order-none md:max-w-[420px]" />
         </section>
 
         {/* お悩み */}
