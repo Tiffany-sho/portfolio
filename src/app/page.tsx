@@ -85,10 +85,9 @@ export default function Home() {
             </p>
             {/* 語の途中で改行されないよう、句ごとに inline-block にして句の切れ目でだけ折り返す */}
             <h1 className="mt-4 font-mincho text-[clamp(1.4rem,7.3vw,1.75rem)] leading-[1.5] font-semibold text-teal-deep sm:text-[2.4rem]">
-              <span className="inline-block">お店の</span>
-              <span className="inline-block">「よく聞かれること」に、</span>
-              <span className="inline-block">ホームページが</span>
-              <span className="inline-block">答えます。</span>
+              <span className="inline-block">お店の困りごとを、</span>
+              <span className="inline-block">ホームページで</span>
+              <span className="inline-block">解決します。</span>
             </h1>
             <p className="mt-6 max-w-xl leading-loose text-muted">
               {site.description}
@@ -252,7 +251,7 @@ export default function Home() {
             <SectionHead
               eyebrow="FLOW"
               title="ご相談から公開まで"
-              lead="作り始める前に、電話でよく聞かれることやお店が伝えたいことを一緒に整理します。"
+              lead="作り始める前に、お店が伝えたいことと、お客さまが知りたいことを一緒に整理します。"
             />
             <ol className="grid gap-4 md:grid-cols-5">
               {steps.map((s, i) => (
