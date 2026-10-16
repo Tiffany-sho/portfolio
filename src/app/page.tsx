@@ -4,6 +4,7 @@ import { DeskIllustration } from "@/components/DeskIllustration";
 import { EmailLink } from "@/components/EmailLink";
 import {
   cases,
+  consultation,
   plans,
   priceNotes,
   profile,
@@ -253,6 +254,15 @@ export default function Home() {
               title="ご相談から公開まで"
               lead="作り始める前に、お店が伝えたいことと、お客さまが知りたいことを一緒に整理します。"
             />
+            <div
+              data-reveal
+              className="mb-10 rounded-md border-l-4 border-teal bg-white px-6 py-6 sm:px-8"
+            >
+              <p className="font-mincho text-xl font-semibold text-teal-deep sm:text-2xl">
+                {consultation.title}
+              </p>
+              <p className="mt-3 max-w-3xl leading-loose text-ink">{consultation.body}</p>
+            </div>
             <ol className="grid gap-4 md:grid-cols-5">
               {steps.map((s, i) => (
                 <li key={s.title} data-reveal style={order(i)} className="rounded-md bg-white p-5">
@@ -282,6 +292,7 @@ export default function Home() {
                 <p className="mt-6 text-sm text-muted">
                   対応エリア：
                   <span className="font-bold text-ink">{site.area}</span>
+                  （ご相談は対面で伺います）
                 </p>
               </div>
               <div>
