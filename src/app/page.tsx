@@ -3,6 +3,12 @@ import Image from "next/image";
 import { DeskIllustration } from "@/components/DeskIllustration";
 import { EmailLink } from "@/components/EmailLink";
 import {
+  ConsultIllustration,
+  MailIllustration,
+  StudyIllustration,
+  WorryIcon,
+} from "@/components/Illustrations";
+import {
   cases,
   consultation,
   plans,
@@ -123,15 +129,14 @@ export default function Home() {
             <ul className="mt-10 grid gap-3 sm:grid-cols-2">
               {worries.map((w, i) => (
                 <li
-                  key={w}
+                  key={w.text}
                   data-reveal
-                  style={order(i)}
-                  className="flex items-start gap-3 rounded-md bg-white/10 px-5 py-4 leading-relaxed"
+                  style={{ ...order(i), "--icon-bg": "#446d80" } as CSSProperties}
+                  className="flex items-center gap-4 rounded-md bg-white/10 px-5 py-4 leading-relaxed"
                 >
-                  <span aria-hidden className="mt-[0.15em] font-bold">
-                    ✓
-                  </span>
-                  {w}
+                  {/* --icon-bg は bg-white/10 を teal-deep に重ねた色（時計アイコンの塗り用） */}
+                  <WorryIcon name={w.icon} className="h-10 w-10 shrink-0 text-white" />
+                  {w.text}
                 </li>
               ))}
             </ul>
@@ -256,12 +261,15 @@ export default function Home() {
             />
             <div
               data-reveal
-              className="mb-10 rounded-md border-l-4 border-teal bg-white px-6 py-6 sm:px-8"
+              className="mb-10 grid items-center gap-6 rounded-md border-l-4 border-teal bg-white px-6 py-6 sm:px-8 md:grid-cols-[1fr_240px]"
             >
-              <p className="font-mincho text-xl font-semibold text-teal-deep sm:text-2xl">
-                {consultation.title}
-              </p>
-              <p className="mt-3 max-w-3xl leading-loose text-ink">{consultation.body}</p>
+              <div>
+                <p className="font-mincho text-xl font-semibold text-teal-deep sm:text-2xl">
+                  {consultation.title}
+                </p>
+                <p className="mt-3 max-w-3xl leading-loose text-ink">{consultation.body}</p>
+              </div>
+              <ConsultIllustration className="mx-auto w-full max-w-[240px] text-teal" />
             </div>
             <ol className="grid gap-4 md:grid-cols-5">
               {steps.map((s, i) => (
@@ -294,6 +302,7 @@ export default function Home() {
                   <span className="font-bold text-ink">{site.area}</span>
                   （ご相談は対面で伺います）
                 </p>
+                <StudyIllustration className="mt-8 w-full max-w-[300px] text-teal" />
               </div>
               <div>
                 <div data-reveal style={order(1)} className="space-y-4 leading-loose">
@@ -350,6 +359,9 @@ export default function Home() {
         {/* お問い合わせ */}
         <section id="contact" className="scroll-mt-14 bg-teal-deep text-white">
           <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 sm:py-24">
+            <div data-reveal>
+              <MailIllustration className="mx-auto mb-6 w-full max-w-[220px] text-white/85" />
+            </div>
             <p className="text-xs font-bold tracking-[0.18em] text-white/85">
               CONTACT
             </p>

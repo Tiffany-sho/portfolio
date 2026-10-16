@@ -125,6 +125,19 @@ html.reveal-ready [data-reveal].is-in {
   }
 }
 
+/* セクションの線画（.sketch）：自分か親の [data-reveal] が画面に入ったら、線を引くように描く。
+   JS が動かない・監視が起動しない・動きを減らす設定のときは最初から描き終えた状態で見せる */
+html.reveal-ready .sketch * {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1.05;
+  transition: stroke-dashoffset 2.2s var(--ease-lux) 0.3s;
+}
+html.reveal-ready .is-in .sketch *,
+html.reveal-ready .sketch.is-in *,
+html.reveal-ready:not(.reveal-observing) .sketch * {
+  stroke-dashoffset: 0;
+}
+
 /* 事例の画像：ホバーでゆっくり寄る */
 article img {
   transition: transform 1.2s var(--ease-lux) !important;
@@ -164,6 +177,10 @@ article img {
   }
   article img {
     transition: none !important;
+  }
+  html.reveal-ready .sketch * {
+    stroke-dashoffset: 0;
+    transition: none;
   }
   .link-grow:hover {
     animation: none;
