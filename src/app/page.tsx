@@ -1,281 +1,355 @@
 import Image from "next/image";
+import { DeskIllustration } from "@/components/DeskIllustration";
 import { EmailLink } from "@/components/EmailLink";
-import { plans, priceNotes, profile, services, site, steps, works } from "@/content/site";
+import {
+  cases,
+  plans,
+  priceNotes,
+  profile,
+  site,
+  steps,
+  strengths,
+  testimonials,
+  worries,
+} from "@/content/site";
 
-const sections = [
-  { id: "works", en: "Works", ja: "制作実績" },
-  { id: "service", en: "Service", ja: "できること" },
-  { id: "price", en: "Price", ja: "料金の目安" },
-  { id: "flow", en: "Flow", ja: "制作の流れ" },
-  { id: "profile", en: "Profile", ja: "プロフィール" },
-  { id: "contact", en: "Contact", ja: "お問い合わせ" },
-] as const;
+const nav = [
+  { href: "#cases", label: "事例" },
+  { href: "#price", label: "料金" },
+  { href: "#contact", label: "お問い合わせ" },
+];
 
-type SectionId = (typeof sections)[number]["id"];
-
-const pad = (n: number) => String(n).padStart(2, "0");
-
-function SectionHead({ id }: { id: SectionId }) {
-  const index = sections.findIndex((s) => s.id === id);
-  const section = sections[index];
+function SectionHead({
+  eyebrow,
+  title,
+  lead,
+}: {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+}) {
   return (
-    <header className="mb-12 flex items-baseline gap-4 border-t border-ink pt-4 sm:mb-16">
-      <span className="font-display text-sm tracking-widest text-muted">{pad(index + 1)}</span>
-      <h2 className="flex flex-1 flex-wrap items-baseline gap-x-4 gap-y-1">
-        <span className="font-display text-4xl italic leading-none sm:text-6xl">{section.en}</span>
-        <span className="font-mincho text-sm tracking-[0.2em] text-muted">{section.ja}</span>
+    <header className="mb-10 sm:mb-14">
+      <p className="text-xs font-bold tracking-[0.18em] text-teal-text">{eyebrow}</p>
+      <h2 className="mt-2 font-mincho text-2xl leading-snug font-semibold text-teal-deep sm:text-[2rem]">
+        {title}
       </h2>
+      {lead && (
+        <p className="mt-4 max-w-2xl leading-loose text-muted">{lead}</p>
+      )}
     </header>
   );
 }
 
+const caseLabels = [
+  { key: "problem", label: "課題" },
+  { key: "action", label: "やったこと" },
+  { key: "result", label: "結果" },
+] as const;
+
 export default function Home() {
   return (
     <>
-      <header className="sticky top-0 z-10 bg-paper/90 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between border-b border-rule px-4 sm:px-8">
-          <a href="#" className="font-display text-lg tracking-[0.25em] uppercase">
-            {site.nameEn}
+      <header className="sticky top-0 z-10 border-b border-line bg-white/90 backdrop-blur">
+        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6">
+          <a
+            href="#"
+            className="font-mincho text-lg font-semibold tracking-widest text-teal-deep"
+          >
+            {site.nameJa}
           </a>
           <nav aria-label="ページ内リンク">
-            <ul className="flex gap-5 font-display text-base sm:gap-8">
-              {sections
-                .filter((s) => s.id === "works" || s.id === "price" || s.id === "contact")
-                .map((s) => (
-                  <li key={s.id}>
-                    <a href={`#${s.id}`} className="hover:text-accent">
-                      {s.en}
-                    </a>
-                  </li>
-                ))}
+            <ul className="flex gap-4 text-sm text-muted sm:gap-7">
+              {nav.map((item) => (
+                <li key={item.href}>
+                  <a href={item.href} className="hover:text-teal-deep">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-8">
-        {/* Hero */}
-        <section className="pt-10 pb-20 sm:pt-16 sm:pb-28">
-          <div className="flex items-center justify-between font-display text-sm tracking-[0.2em] text-muted uppercase">
-            <span>
-              Web Design<span className="hidden sm:inline"> &amp; Development</span>
-            </span>
-            <span>Portfolio</span>
-          </div>
-          <div className="mt-3 border-t border-ink" />
-
-          <h1 className="mt-14 font-mincho text-[2.6rem] leading-[1.35] font-semibold tracking-wide sm:mt-20 sm:text-7xl sm:leading-[1.3] lg:text-[5.5rem]">
-            お店の魅力が、
-            <br />
-            {/* 句の途中で改行されないよう、句ごとに折り返す */}
-            <span className="inline-block">ちゃんと伝わる</span>
-            <span className="inline-block">
-              ホームページを<span className="text-accent">。</span>
-            </span>
-          </h1>
-
-          <div className="mt-14 grid gap-10 border-t border-rule pt-8 sm:mt-20 md:grid-cols-12">
-            <p className="text-[0.95rem] leading-loose text-muted md:col-span-6">{site.description}</p>
-            <div className="flex flex-col items-start gap-4 md:col-span-5 md:col-start-8 md:items-end">
+      <main className="flex-1">
+        {/* ファーストビュー */}
+        <section className="mx-auto grid max-w-5xl items-center gap-10 px-4 pt-14 pb-16 sm:px-6 md:grid-cols-[1.15fr_1fr] md:pt-20 md:pb-24">
+          <div>
+            <p className="text-sm font-bold tracking-[0.12em] text-teal-text">
+              {site.area}の{site.role}
+            </p>
+            {/* 語の途中で改行されないよう、句ごとに inline-block にして句の切れ目でだけ折り返す */}
+            <h1 className="mt-4 font-mincho text-[clamp(1.4rem,7.3vw,1.75rem)] leading-[1.5] font-semibold text-teal-deep sm:text-[2.4rem]">
+              <span className="inline-block">お店の</span>
+              <span className="inline-block">「よく聞かれること」に、</span>
+              <span className="inline-block">ホームページが</span>
+              <span className="inline-block">答えます。</span>
+            </h1>
+            <p className="mt-6 max-w-xl leading-loose text-muted">
+              {site.description}
+            </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#contact"
-                className="group inline-flex items-center gap-3 border-b border-ink pb-1 font-mincho text-lg"
+                className="inline-flex h-12 items-center justify-center rounded-md bg-teal-deep px-7 font-bold text-white hover:bg-teal"
               >
                 メールで相談する（無料）
-                <span aria-hidden className="transition-transform group-hover:translate-x-1">
-                  →
-                </span>
               </a>
-              <p className="font-mincho text-sm text-muted">
-                {site.nameJa}
-                <span className="ml-2 font-display">{site.nameEn}</span>
-              </p>
+              <a
+                href="#cases"
+                className="inline-flex h-12 items-center justify-center rounded-md border border-teal px-7 font-bold text-teal-deep hover:bg-mist"
+              >
+                事例を見る
+              </a>
             </div>
           </div>
+          <DeskIllustration className="mx-auto w-full max-w-[420px] text-teal" />
+        </section>
 
-          {/* 目次 */}
-          <nav aria-label="目次" className="mt-16 sm:mt-20">
-            <ol className="grid grid-cols-2 border-t border-rule sm:grid-cols-3 lg:grid-cols-6">
-              {sections.map((s, i) => (
-                <li key={s.id} className="border-b border-rule">
-                  <a
-                    href={`#${s.id}`}
-                    className="flex items-baseline gap-3 py-4 pr-4 hover:text-accent"
-                  >
-                    <span className="font-display text-xs text-muted">{pad(i + 1)}</span>
-                    <span className="font-display text-xl italic">{s.en}</span>
-                  </a>
+        {/* お悩み */}
+        <section className="bg-teal-deep text-white">
+          <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
+            <p className="text-xs font-bold tracking-[0.18em] text-white/75">
+              WORRIES
+            </p>
+            <h2 className="mt-2 font-mincho text-2xl font-semibold sm:text-[2rem]">
+              こんなお悩みはありませんか？
+            </h2>
+            <ul className="mt-10 grid gap-3 sm:grid-cols-2">
+              {worries.map((w) => (
+                <li
+                  key={w}
+                  className="flex items-start gap-3 rounded-md bg-white/10 px-5 py-4 leading-relaxed"
+                >
+                  <span aria-hidden className="mt-[0.15em] font-bold">
+                    ✓
+                  </span>
+                  {w}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-10 leading-loose text-white">
+              下の2つの事例は、どちらも実際にあった困りごとを、Webで減らしたものです。
+            </p>
+          </div>
+        </section>
+
+        {/* 事例 */}
+        <section id="cases" className="scroll-mt-14">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-24">
+            <SectionHead eyebrow="CASES" title="困りごとを、こう解決しました" />
+            <div className="space-y-20">
+              {cases.map((c, i) => (
+                <article key={c.id} aria-labelledby={`case-${c.id}`}>
+                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b-2 border-teal pb-3">
+                    <span className="text-sm font-bold text-teal-text">
+                      事例 {i + 1}
+                    </span>
+                    <h3
+                      id={`case-${c.id}`}
+                      className="font-mincho text-2xl font-semibold text-teal-deep"
+                    >
+                      {c.title}
+                    </h3>
+                    <span className="text-sm text-muted">{c.kind}</span>
+                  </div>
+
+                  <div className="mt-8 grid gap-8 md:grid-cols-[1fr_1.1fr] md:gap-10">
+                    <a
+                      href={c.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group block self-start overflow-hidden rounded-md border border-line"
+                    >
+                      <Image
+                        src={c.image}
+                        alt={c.imageAlt}
+                        width={1280}
+                        height={800}
+                        sizes="(min-width: 1024px) 460px, (min-width: 768px) 46vw, 100vw"
+                        className="h-auto w-full transition duration-300 group-hover:scale-[1.02]"
+                      />
+                    </a>
+
+                    <div className="grid gap-5">
+                      <dl className="grid gap-5">
+                        {caseLabels.map(({ key, label }) => (
+                          <div
+                            key={key}
+                            className={
+                              key === "result"
+                                ? "rounded-md bg-mist px-5 py-4"
+                                : "border-l-2 border-line pl-5"
+                            }
+                          >
+                            <dt className="text-sm font-bold text-teal-text">
+                              {label}
+                            </dt>
+                            <dd
+                              className={`mt-1 leading-loose ${key === "result" ? "font-bold text-teal-deep" : ""}`}
+                            >
+                              {c[key]}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+                        <a
+                          href={c.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-bold text-teal-deep underline underline-offset-4 hover:text-teal-text"
+                        >
+                          サイトを見る
+                        </a>
+                        {c.appStoreUrl && (
+                          <a
+                            href={c.appStoreUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-bold text-teal-deep underline underline-offset-4 hover:text-teal-text"
+                          >
+                            App Store で見る
+                          </a>
+                        )}
+                        <span className="text-muted">
+                          {c.stack.join(" / ")}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {testimonials.length > 0 && (
+              <div className="mt-20 grid gap-4">
+                {testimonials.map((t) => (
+                  <figure key={t.from} className="rounded-md bg-mist px-6 py-6">
+                    <blockquote className="font-mincho text-lg leading-loose text-teal-deep">
+                      「{t.body}」
+                    </blockquote>
+                    <figcaption className="mt-3 text-sm text-muted">
+                      {t.from}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* 進め方 */}
+        <section className="bg-mist">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-24">
+            <SectionHead
+              eyebrow="FLOW"
+              title="ご相談から公開まで"
+              lead="作り始める前に、電話でよく聞かれることやお店が伝えたいことを一緒に整理します。"
+            />
+            <ol className="grid gap-4 md:grid-cols-5">
+              {steps.map((s, i) => (
+                <li key={s.title} className="rounded-md bg-white p-5">
+                  <p className="text-sm font-bold text-teal-text">STEP {i + 1}</p>
+                  <h3 className="mt-1 font-bold text-teal-deep">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">
+                    {s.body}
+                  </p>
                 </li>
               ))}
             </ol>
-          </nav>
-        </section>
-
-        {/* Works */}
-        <section id="works" className="scroll-mt-14 pb-24 sm:pb-32">
-          <SectionHead id="works" />
-          <div className="space-y-20 sm:space-y-28">
-            {works.map((work, i) => (
-              <article key={work.title} className="grid gap-8 md:grid-cols-12 md:gap-10">
-                <a
-                  href={work.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`group block overflow-hidden md:col-span-8 ${i % 2 === 1 ? "md:order-2" : ""}`}
-                >
-                  <Image
-                    src={work.image}
-                    alt={work.imageAlt}
-                    width={1280}
-                    height={800}
-                    sizes="(min-width: 1152px) 720px, (min-width: 768px) 66vw, 100vw"
-                    className="h-auto w-full grayscale-[15%] transition duration-500 group-hover:scale-[1.02] group-hover:grayscale-0"
-                  />
-                </a>
-                <div className="flex flex-col md:col-span-4">
-                  <p className="font-display text-6xl leading-none text-accent italic">No.{pad(i + 1)}</p>
-                  <h3 className="mt-6 font-mincho text-3xl font-semibold">{work.title}</h3>
-                  <p className="mt-2 font-display text-base tracking-wider text-muted italic">
-                    {work.kindEn}
-                    <span className="ml-2 font-sans text-xs not-italic">／{work.kind}</span>
-                  </p>
-                  <p className="mt-6 text-[0.95rem] leading-loose">{work.summary}</p>
-                  <ul className="mt-5 space-y-2 border-t border-rule pt-5 text-sm text-muted">
-                    {work.points.map((point) => (
-                      <li key={point} className="flex gap-2">
-                        <span aria-hidden>—</span>
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-5 font-display text-sm tracking-wider text-muted" aria-label="使用技術">
-                    {work.stack.join(" / ")}
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
-                    <a
-                      href={work.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="border-b border-ink pb-0.5 font-display text-lg italic hover:border-accent hover:text-accent"
-                    >
-                      Visit site →
-                    </a>
-                    {work.appStoreUrl && (
-                      <a
-                        href={work.appStoreUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border-b border-ink pb-0.5 font-display text-lg italic hover:border-accent hover:text-accent"
-                      >
-                        App Store →
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </article>
-            ))}
           </div>
         </section>
 
-        {/* Service */}
-        <section id="service" className="scroll-mt-14 pb-24 sm:pb-32">
-          <SectionHead id="service" />
-          <ol className="grid border-t border-rule md:grid-cols-2">
-            {services.map((service, i) => (
-              <li
-                key={service.title}
-                className={`border-b border-rule py-8 md:px-8 ${i % 2 === 0 ? "md:border-r md:pl-0" : "md:pr-0"}`}
-              >
-                <p className="font-display text-sm text-muted">{pad(i + 1)}</p>
-                <h3 className="mt-2 font-mincho text-2xl font-semibold">{service.title}</h3>
-                <p className="mt-3 text-[0.95rem] leading-loose text-muted">{service.body}</p>
-              </li>
-            ))}
-          </ol>
+        {/* 私について */}
+        <section>
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-24">
+            <SectionHead eyebrow="ABOUT" title="私について" />
+            <div className="grid gap-10 md:grid-cols-[1fr_1.6fr]">
+              <div>
+                <p className="font-mincho text-3xl font-semibold tracking-widest text-teal-deep">
+                  {site.nameJa}
+                </p>
+                <p className="mt-2 text-sm tracking-[0.25em] text-muted">
+                  {site.nameEn.toUpperCase()}
+                </p>
+                <p className="mt-6 text-sm text-muted">
+                  対応エリア：
+                  <span className="font-bold text-ink">{site.area}</span>
+                </p>
+              </div>
+              <div>
+                <div className="space-y-4 leading-loose">
+                  {profile.lines.map((l) => (
+                    <p key={l}>{l}</p>
+                  ))}
+                </div>
+                <h3 className="mt-10 font-bold text-teal-deep">
+                  研究で身についたことを、お店のために
+                </h3>
+                <ul className="mt-4 grid gap-3">
+                  {strengths.map((s) => (
+                    <li key={s.title} className="border-l-2 border-teal pl-5">
+                      <p className="font-bold">{s.title}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted">
+                        {s.body}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </section>
 
-        {/* Price — 品書き風 */}
-        <section id="price" className="scroll-mt-14 pb-24 sm:pb-32">
-          <SectionHead id="price" />
-          <div className="bg-paper-deep px-5 py-10 sm:px-14 sm:py-14">
-            <p className="text-center font-mincho text-sm tracking-[0.5em] text-muted">お品書き</p>
-            <ul className="mt-10 space-y-10">
-              {plans.map((plan) => (
-                <li key={plan.name}>
-                  <p className="flex items-baseline gap-3">
-                    <span className="font-mincho text-lg font-semibold sm:text-2xl">{plan.name}</span>
-                    <span aria-hidden className="mb-1.5 flex-1 border-b border-dotted border-ink/40" />
-                    <span className="font-mincho text-xl font-semibold text-accent sm:text-3xl">{plan.price}</span>
-                  </p>
-                  <p className="mt-2 text-sm text-muted">{plan.note}</p>
+        {/* 料金 */}
+        <section id="price" className="scroll-mt-14 bg-mist">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-24">
+            <SectionHead eyebrow="PRICE" title="料金の目安" />
+            <ul className="divide-y divide-line rounded-md bg-white px-5 sm:px-8">
+              {plans.map((p) => (
+                <li
+                  key={p.name}
+                  className="flex flex-col gap-1 py-6 sm:flex-row sm:items-baseline sm:gap-6"
+                >
+                  <span className="font-bold text-teal-deep sm:w-56">
+                    {p.name}
+                  </span>
+                  <span className="font-mincho text-2xl font-semibold text-teal-deep sm:w-36">
+                    {p.price}
+                  </span>
+                  <span className="text-sm text-muted">{p.note}</span>
                 </li>
               ))}
             </ul>
-            <ul className="mt-12 space-y-1 border-t border-rule pt-6 text-xs leading-relaxed text-muted sm:text-sm">
-              {priceNotes.map((note) => (
-                <li key={note}>※ {note}</li>
+            <ul className="mt-5 space-y-1 text-sm text-muted">
+              {priceNotes.map((n) => (
+                <li key={n}>※ {n}</li>
               ))}
             </ul>
           </div>
         </section>
 
-        {/* Flow */}
-        <section id="flow" className="scroll-mt-14 pb-24 sm:pb-32">
-          <SectionHead id="flow" />
-          <ol className="grid border-t border-ink md:grid-cols-5">
-            {steps.map((step, i) => (
-              <li
-                key={step.title}
-                className="grid grid-cols-[3.5rem_1fr] gap-x-2 border-b border-rule py-6 md:block md:border-r md:border-b-0 md:px-5 md:py-8 md:first:pl-0 md:last:border-r-0"
-              >
-                <p className="font-display text-4xl leading-none text-accent italic md:text-5xl">{i + 1}</p>
-                <div>
-                  <h3 className="font-mincho text-xl font-semibold md:mt-6">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{step.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        {/* Profile */}
-        <section id="profile" className="scroll-mt-14 pb-24 sm:pb-32">
-          <SectionHead id="profile" />
-          <div className="grid gap-10 md:grid-cols-12">
-            <div className="md:col-span-4">
-              <p className="font-mincho text-4xl font-semibold tracking-widest">{site.nameJa}</p>
-              <p className="mt-2 font-display text-xl tracking-[0.2em] text-muted uppercase">{site.nameEn}</p>
-            </div>
-            <div className="space-y-5 text-[0.95rem] leading-loose md:col-span-7 md:col-start-6">
-              {profile.lines.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Contact */}
-        <section id="contact" className="scroll-mt-14 pb-24 sm:pb-32">
-          <SectionHead id="contact" />
-          <p className="font-mincho text-3xl leading-snug font-semibold sm:text-5xl sm:leading-snug">
-            <span className="inline-block">ご相談、</span>
-            <span className="inline-block">お待ちしています。</span>
-          </p>
-          <p className="mt-6 max-w-xl text-[0.95rem] leading-loose text-muted">
-            「まだ何も決まっていない」段階でも大丈夫です。ご相談・お見積もりは無料です。
-          </p>
-          <div className="mt-12 border-y border-ink py-8">
-            <p className="font-display text-sm tracking-[0.2em] text-muted uppercase">Mail</p>
-            <EmailLink className="mt-2 inline-block font-display text-[1.6rem] break-all hover:text-accent sm:text-5xl" />
+        {/* お問い合わせ */}
+        <section id="contact" className="scroll-mt-14 bg-teal-deep text-white">
+          <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 sm:py-24">
+            <p className="text-xs font-bold tracking-[0.18em] text-white/85">
+              CONTACT
+            </p>
+            <h2 className="mt-2 font-mincho text-2xl font-semibold sm:text-[2rem]">
+              まずはお気軽にご相談ください
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl leading-loose text-white/85">
+              「まだ何も決まっていない」段階でも大丈夫です。ご相談・お見積もりは無料です。
+            </p>
+            <EmailLink className="mt-9 inline-flex min-h-12 items-center justify-center rounded-md bg-white px-7 py-3 font-bold break-all text-teal-deep hover:bg-mist" />
           </div>
         </section>
       </main>
 
-      <footer className="mx-auto w-full max-w-6xl px-4 pb-10 sm:px-8">
-        <div className="flex items-center justify-between border-t border-rule pt-6 font-display text-sm text-muted">
-          <span className="tracking-[0.2em] uppercase">{site.nameEn}</span>
-          <span>© 2026</span>
-        </div>
+      <footer className="bg-teal-deep pb-8 text-center text-xs text-white/60">
+        © 2026 {site.nameEn}
       </footer>
     </>
   );
