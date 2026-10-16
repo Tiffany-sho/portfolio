@@ -135,7 +135,7 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <p className="mt-10 leading-loose text-white">
+            <p data-reveal className="mt-10 leading-loose text-white">
               下の2つの事例は、どちらも実際にあった困りごとを、Webで減らしたものです。
             </p>
           </div>
@@ -232,7 +232,7 @@ export default function Home() {
             {testimonials.length > 0 && (
               <div className="mt-20 grid gap-4">
                 {testimonials.map((t) => (
-                  <figure key={t.from} className="rounded-md bg-mist px-6 py-6">
+                  <figure key={t.from} data-reveal className="rounded-md bg-mist px-6 py-6">
                     <blockquote className="font-mincho text-lg leading-loose text-teal-deep">
                       「{t.body}」
                     </blockquote>
@@ -273,7 +273,7 @@ export default function Home() {
           <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-24">
             <SectionHead eyebrow="ABOUT" title="私について" />
             <div className="grid gap-10 md:grid-cols-[1fr_1.6fr]">
-              <div>
+              <div data-reveal>
                 <p className="font-mincho text-3xl font-semibold tracking-widest text-teal-deep">
                   {site.nameJa}
                 </p>
@@ -286,12 +286,12 @@ export default function Home() {
                 </p>
               </div>
               <div>
-                <div className="space-y-4 leading-loose">
+                <div data-reveal style={order(1)} className="space-y-4 leading-loose">
                   {profile.lines.map((l) => (
                     <p key={l}>{l}</p>
                   ))}
                 </div>
-                <h3 className="mt-10 font-bold text-teal-deep">
+                <h3 data-reveal className="mt-10 font-bold text-teal-deep">
                   研究で身についたことを、お店のために
                 </h3>
                 <ul className="mt-4 grid gap-3">
@@ -329,7 +329,7 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <ul className="mt-5 space-y-1 text-sm text-muted">
+            <ul data-reveal style={order(1)} className="mt-5 space-y-1 text-sm text-muted">
               {priceNotes.map((n) => (
                 <li key={n}>※ {n}</li>
               ))}

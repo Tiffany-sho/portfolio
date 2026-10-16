@@ -101,20 +101,23 @@ body {
 .draw > g:nth-of-type(3) * { animation-delay: 1.3s; }
 
 /* スクロールで浮かび上がる。html.reveal-ready（layout の先頭スクリプトが付ける）があるときだけ隠すので、
-   JS が動かない環境では最初から全部見える。万一監視が動かなくても 2.5 秒後には必ず表示する */
+   JS が動かない環境では最初から全部見える */
 html.reveal-ready [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(28px);
   transition:
-    opacity 1.1s var(--ease-lux),
-    transform 1.1s var(--ease-lux);
+    opacity 1.2s var(--ease-lux),
+    transform 1.2s var(--ease-lux);
   transition-delay: calc(var(--i, 0) * 0.12s);
+}
+/* 保険：画面内の監視（RevealObserver）が起動しなかったときだけ、2.5 秒後に全部表示する。
+   監視が起動すると html.reveal-observing が付き、この保険は止まる（スクロールで出す演出を潰さないため） */
+html.reveal-ready:not(.reveal-observing) [data-reveal] {
   animation: reveal-fallback 0s 2.5s forwards;
 }
 html.reveal-ready [data-reveal].is-in {
   opacity: 1;
   transform: none;
-  animation: none;
 }
 @keyframes reveal-fallback {
   to {
