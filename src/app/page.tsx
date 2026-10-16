@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { DeskIllustration } from "@/components/DeskIllustration";
 import { EmailLink } from "@/components/EmailLink";
@@ -29,7 +30,7 @@ function SectionHead({
   lead?: string;
 }) {
   return (
-    <header className="mb-10 sm:mb-14">
+    <header data-reveal className="mb-10 sm:mb-14">
       <p className="text-xs font-bold tracking-[0.18em] text-teal-text">{eyebrow}</p>
       <h2 className="mt-2 font-mincho text-2xl leading-snug font-semibold text-teal-deep sm:text-[2rem]">
         {title}
@@ -40,6 +41,9 @@ function SectionHead({
     </header>
   );
 }
+
+/** 時間差で現れる項目の順番（CSS の --i） */
+const order = (i: number) => ({ "--i": i }) as CSSProperties;
 
 const caseLabels = [
   { key: "problem", label: "課題" },
@@ -75,7 +79,7 @@ export default function Home() {
       <main className="flex-1">
         {/* ファーストビュー */}
         <section className="mx-auto grid max-w-5xl items-center gap-10 px-4 pt-14 pb-16 sm:px-6 md:grid-cols-[1.15fr_1fr] md:pt-20 md:pb-24">
-          <div>
+          <div className="hero-in">
             <p className="text-sm font-bold tracking-[0.12em] text-teal-text">
               {site.area}の{site.role}
             </p>
@@ -92,34 +96,36 @@ export default function Home() {
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#contact"
-                className="inline-flex h-12 items-center justify-center rounded-md bg-teal-deep px-7 font-bold text-white hover:bg-teal"
+                className="inline-flex h-12 items-center justify-center rounded-md bg-teal-deep px-7 font-bold text-white transition-colors duration-500 hover:bg-teal"
               >
                 メールで相談する（無料）
               </a>
               <a
                 href="#cases"
-                className="inline-flex h-12 items-center justify-center rounded-md border border-teal px-7 font-bold text-teal-deep hover:bg-mist"
+                className="inline-flex h-12 items-center justify-center rounded-md border border-teal px-7 font-bold text-teal-deep transition-colors duration-500 hover:bg-mist"
               >
                 事例を見る
               </a>
             </div>
           </div>
-          <DeskIllustration className="mx-auto w-full max-w-[420px] text-teal" />
+          <DeskIllustration className="draw mx-auto w-full max-w-[420px] text-teal" />
         </section>
 
         {/* お悩み */}
         <section className="bg-teal-deep text-white">
           <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
-            <p className="text-xs font-bold tracking-[0.18em] text-white/75">
+            <p data-reveal className="text-xs font-bold tracking-[0.18em] text-white/75">
               WORRIES
             </p>
-            <h2 className="mt-2 font-mincho text-2xl font-semibold sm:text-[2rem]">
+            <h2 data-reveal className="mt-2 font-mincho text-2xl font-semibold sm:text-[2rem]">
               こんなお悩みはありませんか？
             </h2>
             <ul className="mt-10 grid gap-3 sm:grid-cols-2">
-              {worries.map((w) => (
+              {worries.map((w, i) => (
                 <li
                   key={w}
+                  data-reveal
+                  style={order(i)}
                   className="flex items-start gap-3 rounded-md bg-white/10 px-5 py-4 leading-relaxed"
                 >
                   <span aria-hidden className="mt-[0.15em] font-bold">
@@ -141,7 +147,7 @@ export default function Home() {
             <SectionHead eyebrow="CASES" title="困りごとを、こう解決しました" />
             <div className="space-y-20">
               {cases.map((c, i) => (
-                <article key={c.id} aria-labelledby={`case-${c.id}`}>
+                <article data-reveal key={c.id} aria-labelledby={`case-${c.id}`}>
                   <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b-2 border-teal pb-3">
                     <span className="text-sm font-bold text-teal-text">
                       事例 {i + 1}
@@ -199,7 +205,7 @@ export default function Home() {
                           href={c.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-bold text-teal-deep underline underline-offset-4 hover:text-teal-text"
+                          className="link-grow font-bold text-teal-deep"
                         >
                           サイトを見る
                         </a>
@@ -208,7 +214,7 @@ export default function Home() {
                             href={c.appStoreUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="font-bold text-teal-deep underline underline-offset-4 hover:text-teal-text"
+                            className="link-grow font-bold text-teal-deep"
                           >
                             App Store で見る
                           </a>
@@ -250,7 +256,7 @@ export default function Home() {
             />
             <ol className="grid gap-4 md:grid-cols-5">
               {steps.map((s, i) => (
-                <li key={s.title} className="rounded-md bg-white p-5">
+                <li key={s.title} data-reveal style={order(i)} className="rounded-md bg-white p-5">
                   <p className="text-sm font-bold text-teal-text">STEP {i + 1}</p>
                   <h3 className="mt-1 font-bold text-teal-deep">{s.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">
@@ -289,8 +295,8 @@ export default function Home() {
                   研究で身についたことを、お店のために
                 </h3>
                 <ul className="mt-4 grid gap-3">
-                  {strengths.map((s) => (
-                    <li key={s.title} className="border-l-2 border-teal pl-5">
+                  {strengths.map((s, i) => (
+                    <li key={s.title} data-reveal style={order(i)} className="border-l-2 border-teal pl-5">
                       <p className="font-bold">{s.title}</p>
                       <p className="mt-1 text-sm leading-relaxed text-muted">
                         {s.body}
@@ -307,7 +313,7 @@ export default function Home() {
         <section id="price" className="scroll-mt-14 bg-mist">
           <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-24">
             <SectionHead eyebrow="PRICE" title="料金の目安" />
-            <ul className="divide-y divide-line rounded-md bg-white px-5 sm:px-8">
+            <ul data-reveal className="divide-y divide-line rounded-md bg-white px-5 sm:px-8">
               {plans.map((p) => (
                 <li
                   key={p.name}
@@ -337,13 +343,15 @@ export default function Home() {
             <p className="text-xs font-bold tracking-[0.18em] text-white/85">
               CONTACT
             </p>
-            <h2 className="mt-2 font-mincho text-2xl font-semibold sm:text-[2rem]">
+            <h2 data-reveal className="mt-2 font-mincho text-2xl font-semibold sm:text-[2rem]">
               まずはお気軽にご相談ください
             </h2>
-            <p className="mx-auto mt-5 max-w-xl leading-loose text-white/85">
+            <p data-reveal className="mx-auto mt-5 max-w-xl leading-loose text-white/85">
               「まだ何も決まっていない」段階でも大丈夫です。ご相談・お見積もりは無料です。
             </p>
-            <EmailLink className="mt-9 inline-flex min-h-12 items-center justify-center rounded-md bg-white px-7 py-3 font-bold break-all text-teal-deep hover:bg-mist" />
+            <div data-reveal style={order(1)}>
+              <EmailLink className="mt-9 inline-flex min-h-12 items-center justify-center rounded-md bg-white px-7 py-3 font-bold break-all text-teal-deep transition-colors duration-500 hover:bg-mist" />
+            </div>
           </div>
         </section>
       </main>

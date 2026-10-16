@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
+import { RevealObserver } from "@/components/RevealObserver";
 import "./globals.css";
 
 const title = `${site.nameJa} | ${site.area}の${site.role}`;
@@ -21,8 +22,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ja" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="ja" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        {/* 描画前に付ける。JS が動く環境でだけ [data-reveal] を隠し、スクロールで浮かび上がらせる */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('reveal-ready')",
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <RevealObserver />
+      </body>
     </html>
   );
 }

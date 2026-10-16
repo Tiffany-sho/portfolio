@@ -46,3 +46,124 @@ body {
     scroll-behavior: auto;
   }
 }
+
+/* ---------- アニメーション ----------
+   高級感は「少なく・ゆっくり・控えめに」。動くのは、表示時の浮かび上がり・線画の描画・ホバーだけ。
+   prefers-reduced-motion が reduce の人には一切動かさない（末尾）。 */
+:root {
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ファーストビュー：JS なしで動く CSS だけの演出。句ごとに少しずつ遅らせる */
+.hero-in > *,
+.hero-in h1 > span {
+  animation: rise 1.1s var(--ease-lux) both;
+}
+.hero-in h1 {
+  animation: none;
+}
+.hero-in > :nth-child(1) { animation-delay: 0.1s; }
+.hero-in h1 > span:nth-child(1) { animation-delay: 0.25s; }
+.hero-in h1 > span:nth-child(2) { animation-delay: 0.4s; }
+.hero-in h1 > span:nth-child(3) { animation-delay: 0.55s; }
+.hero-in h1 > span:nth-child(4) { animation-delay: 0.7s; }
+.hero-in > :nth-child(3) { animation-delay: 0.85s; }
+.hero-in > :nth-child(4) { animation-delay: 1s; }
+
+/* 線画：ペンで描くように線を引く（各図形 pathLength=1） */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.draw * {
+  /* 線の長さ 1 に対して隙間を 2 にし、開始位置を少し先へずらす。
+     そうしないと丸い線端だけが点として先に見えてしまう */
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1.05;
+  animation: draw 2.4s var(--ease-lux) forwards;
+}
+.draw > g:nth-of-type(1) * { animation-delay: 0.4s; }
+.draw > circle,
+.draw > path { animation-delay: 1s; }
+.draw > g:nth-of-type(2) *,
+.draw > g:nth-of-type(3) * { animation-delay: 1.3s; }
+
+/* スクロールで浮かび上がる。html.reveal-ready（layout の先頭スクリプトが付ける）があるときだけ隠すので、
+   JS が動かない環境では最初から全部見える。万一監視が動かなくても 2.5 秒後には必ず表示する */
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1.1s var(--ease-lux),
+    transform 1.1s var(--ease-lux);
+  transition-delay: calc(var(--i, 0) * 0.12s);
+  animation: reveal-fallback 0s 2.5s forwards;
+}
+html.reveal-ready [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+@keyframes reveal-fallback {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 事例の画像：ホバーでゆっくり寄る */
+article img {
+  transition: transform 1.2s var(--ease-lux) !important;
+}
+
+/* リンクの下線：ホバーで右へ引いてから、左から伸び直す */
+.link-grow {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  padding-bottom: 2px;
+  transition: color 0.4s;
+}
+.link-grow:hover {
+  animation: underline-sweep 0.9s var(--ease-lux);
+}
+@keyframes underline-sweep {
+  0% { background-position: 100% 100%; background-size: 100% 1px; }
+  45% { background-position: 100% 100%; background-size: 0 1px; }
+  46% { background-position: 0 100%; background-size: 0 1px; }
+  100% { background-position: 0 100%; background-size: 100% 1px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-in > *,
+  .hero-in h1 > span,
+  .draw * {
+    animation: none !important;
+    stroke-dashoffset: 0;
+  }
+  html.reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+  article img {
+    transition: none !important;
+  }
+  .link-grow:hover {
+    animation: none;
+  }
+}
