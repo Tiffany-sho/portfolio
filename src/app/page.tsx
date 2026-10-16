@@ -54,7 +54,7 @@ const order = (i: number) => ({ "--i": i }) as CSSProperties;
 
 const caseLabels = [
   { key: "problem", label: "課題" },
-  { key: "action", label: "やったこと" },
+  { key: "action", label: "解決策" },
   { key: "result", label: "結果" },
 ] as const;
 
