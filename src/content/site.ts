@@ -14,12 +14,15 @@ export const site = {
   emailDomain: "shosei-ueda.com",
 } as const;
 
-/** 「こんなお悩みはありませんか」。誰にでも当てはまる抽象度で書き、具体例は事例（cases）にだけ書く */
+/**
+ * 「こんなお悩みはありませんか」。誰にでも当てはまる抽象度で書き、具体例は事例（cases）にだけ書く。
+ * 円の中に収めるため、改行位置を lines で決めている（Safari は日本語の文節で折り返せないため）
+ */
 export const worries = [
-  { icon: "unclear", text: "お店の魅力や情報が、お客さまに伝わっていない" },
-  { icon: "repeat", text: "同じ問い合わせの対応に、時間を取られている" },
-  { icon: "outdated", text: "ホームページが無い、または古いままになっている" },
-  { icon: "manual", text: "記録や集計などの手作業に、手間がかかっている" },
+  { icon: "unclear", lines: ["お店の魅力や", "情報が、お客さまに", "伝わっていない"] },
+  { icon: "repeat", lines: ["同じ問い合わせの", "対応に、時間を", "取られている"] },
+  { icon: "outdated", lines: ["ホームページが", "無い、または古い", "ままになっている"] },
+  { icon: "manual", lines: ["記録や集計などの", "手作業に、", "手間がかかっている"] },
 ] as const;
 
 export type CaseStudy = {

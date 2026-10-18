@@ -121,28 +121,43 @@ export default function Home() {
         {/* お悩み */}
         <section className="bg-teal-deep text-white">
           <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
-            <p data-reveal className="text-xs font-bold tracking-[0.18em] text-white/75">
-              WORRIES
-            </p>
-            <h2 data-reveal className="mt-2 font-mincho text-2xl font-semibold sm:text-[2rem]">
-              こんなお悩みはありませんか？
-            </h2>
-            <ul className="mt-10 grid gap-3 sm:grid-cols-2">
-              {worries.map((w, i) => (
-                <li
-                  key={w.text}
-                  data-reveal
-                  style={{ ...order(i), "--icon-bg": "#446d80" } as CSSProperties}
-                  className="flex items-center gap-4 rounded-md bg-white/10 px-5 py-4 leading-relaxed"
-                >
-                  {/* --icon-bg は bg-white/10 を teal-deep に重ねた色（時計アイコンの塗り用） */}
-                  <WorryIcon name={w.icon} className="h-10 w-10 shrink-0 text-white" />
-                  {w.text}
-                </li>
-              ))}
-            </ul>
+            {/* 濃い青緑の上に淡いパネルを置き、お悩みを線で描いた円に1つずつ収める */}
+            <div className="rounded-sm bg-mist px-3 py-12 text-ink sm:px-10 sm:py-16">
+              <p data-reveal className="text-center text-xs font-bold tracking-[0.18em] text-teal-text">
+                WORRIES
+              </p>
+              <h2
+                data-reveal
+                className="mt-2 text-center font-mincho text-2xl font-semibold text-teal-deep sm:text-[2rem]"
+              >
+                こんなお悩みは
+                <br className="sm:hidden" />
+                ありませんか？
+              </h2>
+              {/* 幅 360px 未満では円が小さくなり文字が収まらないため1列にする */}
+              <ul className="mx-auto mt-10 grid max-w-[13rem] gap-3 min-[360px]:max-w-[22rem] min-[360px]:grid-cols-2 sm:max-w-none sm:gap-6 md:grid-cols-4">
+                {worries.map((w, i) => (
+                  <li
+                    key={w.icon}
+                    data-reveal
+                    style={{ ...order(i), "--icon-bg": "var(--mist)" } as CSSProperties}
+                    className="flex aspect-square flex-col items-center justify-center rounded-full border border-teal/40 px-2 text-center text-xs leading-relaxed sm:text-sm"
+                  >
+                    {/* --icon-bg はパネルの色（時計アイコンの塗り用） */}
+                    <WorryIcon name={w.icon} className="mb-1.5 h-8 w-8 text-teal sm:mb-2 sm:h-11 sm:w-11" />
+                    <span>
+                      {w.lines.map((line) => (
+                        <span key={line} className="block">
+                          {line}
+                        </span>
+                      ))}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <p data-reveal className="mt-10 leading-loose text-white">
-              下の2つの事例は、どちらも実際にあった困りごとを、Webで減らしたものです。
+              下の{cases.length}つの事例は、どれも実際にあった困りごとを、Webで減らしたものです。
             </p>
           </div>
         </section>
