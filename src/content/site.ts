@@ -53,6 +53,21 @@ export const cases: CaseStudy[] = [
     stack: ["Next.js", "TypeScript", "Tailwind CSS"],
   },
   {
+    id: "isoda",
+    title: "有限会社いそだ設備",
+    kind: "設備工事会社の公式サイト（滋賀県草津市）",
+    url: "https://isodasetsubi.com/",
+    image: "/works/isoda.png",
+    imageAlt: "有限会社いそだ設備 公式サイトのトップページ",
+    problem:
+      "10年ほど前に作られたホームページは、スマホで見ると画面からはみ出して読みにくい状態でした。給排水からリフォーム・外構まで手がける工事の幅広さも、伝わりにくくなっていました。",
+    action:
+      "11種類の工事を一覧にまとめ、それぞれに詳しいページを作りました。地域で長く仕事を続けてきた会社らしい、落ち着いた信頼感のあるデザインにし、スマホでも読みやすくしました。",
+    result:
+      "スマホからでも、どんな工事を頼める会社なのかがすぐに分かるようになりました。2026年9月に公開しています。",
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Cloudflare"],
+  },
+  {
     id: "collecie",
     title: "Collecie",
     kind: "コインランドリーの集金管理アプリ（自社開発）",
