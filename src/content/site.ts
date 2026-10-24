@@ -5,6 +5,8 @@ export const site = {
   url: "https://shosei-ueda.com",
   nameJa: "上田将生",
   nameEn: "Shosei Ueda",
+  // 屋号（個人事業。法人ではないので「会社」と誤認される言葉は付けない）
+  shopName: "近江Web相談所",
   role: "Web制作",
   area: "滋賀県",
   description:

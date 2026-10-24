@@ -3,7 +3,7 @@ import { site } from "@/content/site";
 import { RevealObserver } from "@/components/RevealObserver";
 import "./globals.css";
 
-const title = `${site.nameJa} | ${site.area}の${site.role}`;
+const title = `${site.shopName}（${site.nameJa}）| ${site.area}の${site.role}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title,
     description: site.description,
     url: site.url,
-    siteName: site.nameJa,
+    siteName: site.shopName,
     locale: "ja_JP",
     type: "website",
   },

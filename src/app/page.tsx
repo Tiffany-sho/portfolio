@@ -65,9 +65,11 @@ export default function Home() {
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6">
           <a
             href="#"
-            className="font-mincho text-lg font-semibold tracking-widest text-teal-deep"
+            className="flex items-baseline gap-3 font-mincho text-teal-deep"
           >
-            {site.nameJa}
+            <span className="text-lg font-semibold tracking-widest">{site.shopName}</span>
+            {/* スマホではナビと並んで幅が足りないので、名前は sm 以上でだけ添える */}
+            <span className="hidden text-sm tracking-widest text-muted sm:inline">{site.nameJa}</span>
           </a>
           <nav aria-label="ページ内リンク">
             <ul className="flex gap-4 text-sm text-muted sm:gap-7">
@@ -307,6 +309,9 @@ export default function Home() {
             <SectionHead eyebrow="ABOUT" title="私について" />
             <div className="grid gap-10 md:grid-cols-[1fr_1.6fr]">
               <div data-reveal>
+                <p className="mb-3 text-sm font-bold tracking-[0.12em] text-teal-text">
+                  {site.shopName}
+                </p>
                 <p className="font-mincho text-3xl font-semibold tracking-widest text-teal-deep">
                   {site.nameJa}
                 </p>
@@ -395,7 +400,7 @@ export default function Home() {
       </main>
 
       <footer className="bg-teal-deep pb-8 text-center text-xs text-white/60">
-        © 2026 {site.nameEn}
+        © 2026 {site.shopName} / {site.nameEn}
       </footer>
     </>
   );
