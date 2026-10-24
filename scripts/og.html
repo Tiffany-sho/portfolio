@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>OG画像 近江Web相談所</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600&family=Noto+Sans+JP:wght@500;700&display=block" rel="stylesheet">
+<style>
+  /* リンクを共有したときの画像（1200x630）。名刺と同じ白×青緑・机の線画 */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --teal: #4f7f95; --teal-deep: #2f5d72; }
+  body { width: 1200px; height: 630px; position: relative; overflow: hidden; background: #fff; font-family: 'Noto Sans JP', sans-serif; }
+  .band { position: absolute; left: 0; right: 0; top: 480px; bottom: 0; background: var(--teal); }
+  .rule { position: absolute; left: 70px; top: 0; bottom: 0; width: 3px; background: var(--teal); }
+  .rule.on-band { top: 480px; background: rgba(255, 255, 255, .7); }
+  .eyebrow { position: absolute; left: 122px; top: 98px; font-size: 26px; font-weight: 700; letter-spacing: .12em; color: var(--teal-deep); }
+  h1 { position: absolute; left: 122px; top: 160px; font-family: 'Noto Serif JP', serif; font-weight: 600; font-size: 44px; line-height: 1.55; letter-spacing: .04em; color: var(--teal-deep); }
+  .illust { position: absolute; right: 64px; top: 158px; width: 290px; height: 212px; overflow: visible; }
+  .illust * { fill: none; stroke: var(--teal); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+  .who { position: absolute; left: 122px; top: 508px; color: #fff; }
+  .shop { font-size: 22px; font-weight: 500; letter-spacing: .14em; opacity: .9; }
+  .name { margin-top: 6px; font-family: 'Noto Serif JP', serif; font-weight: 600; font-size: 40px; letter-spacing: .16em; line-height: 1.2; }
+  .url { position: absolute; right: 80px; top: 532px; color: #fff; font-size: 30px; font-weight: 500; letter-spacing: .02em; }
+</style>
+</head>
+<body>
+  <div class="band"></div>
+  <div class="rule"></div>
+  <div class="rule on-band"></div>
+  <p class="eyebrow">滋賀県のWeb制作</p>
+  <h1>お店の困りごとを、<br>ホームページで解決します。</h1>
+  <!-- 名刺（life/business-card/card.html）と同じ線画 -->
+  <svg class="illust" viewBox="0 0 140 102" aria-hidden="true">
+    <g transform="rotate(-8 62 46)">
+      <rect x="34" y="8" width="54" height="34" rx="3"/>
+      <rect x="38" y="12" width="46" height="26" rx="1.5"/>
+      <path d="M44 20 l-4 4 4 4 M78 20 l4 4 -4 4 M64 18 l-6 13"/>
+      <rect x="31" y="44" width="60" height="34" rx="4"/>
+      <path d="M37 51 h48 M37 57 h48 M37 63 h48"/>
+      <path d="M43 51 v12 M49 51 v12 M55 51 v12 M61 51 v12 M67 51 v12 M73 51 v12 M79 51 v12"/>
+      <rect x="52" y="67" width="18" height="8" rx="1.5"/>
+    </g>
+    <circle cx="117" cy="30" r="11"/>
+    <circle cx="117" cy="30" r="7"/>
+    <path d="M128 27 q7 3 0 7"/>
+    <path d="M114 28 q3 -3 6 0"/>
+    <circle cx="116" cy="78" r="8"/>
+    <path d="M116 78 q-4 -14 -14 -16 q2 12 14 16 M116 78 q2 -15 12 -19 q1 13 -12 19 M116 78 q14 -4 20 4 q-12 6 -20 -4 M116 78 q-14 2 -18 11 q12 2 18 -11"/>
+    <g transform="rotate(14 14 62)">
+      <rect x="6" y="46" width="17" height="30" rx="3.5"/>
+      <path d="M12 50 h5 M12 72 h5"/>
+    </g>
+    <g transform="rotate(-4 60 92)">
+      <rect x="38" y="84" width="30" height="16" rx="1.5"/>
+      <path d="M43 89 h20 M43 94 h14"/>
+    </g>
+    <path d="M74 98 l20 -10 M94 88 l3 -1.5 -1 3 z"/>
+  </svg>
+  <div class="who">
+    <p class="shop">近江Web相談所</p>
+    <p class="name">上田 将生</p>
+  </div>
+  <p class="url">shosei-ueda.com</p>
+</body>
+</html>
