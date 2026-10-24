@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { site } from "@/content/site";
 import { RevealObserver } from "@/components/RevealObserver";
 import { Intro } from "@/components/Intro";
@@ -38,6 +39,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Intro />
         {children}
         <RevealObserver />
+        {/* 閲覧数（Vercel Web Analytics）。Cookie を使わない。Vercel のダッシュボードの Analytics で見る */}
+        <Analytics />
       </body>
     </html>
   );
