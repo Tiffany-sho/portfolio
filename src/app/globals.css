@@ -106,7 +106,7 @@ html.intro {
 
 /* ---------- オープニング（components/Intro.tsx） ----------
    0.2s〜1.9s 水色の線で琵琶湖を描く → 1.8s〜 屋号が浮かぶ → 2.7s〜3.5s 絵ごと拡大しながら薄くなって消える。
-   html.intro が無いとき（動きを減らす設定・同じタブで2回目・JS なし）は表示しない。
+   開くたび・再読み込みのたびに出す。html.intro が無いとき（動きを減らす設定・JS なし）は表示しない。
    .intro という名前にすると html.intro 自体に当たってページごと消えるので、必ず .intro-overlay にする */
 .intro-overlay {
   display: none;

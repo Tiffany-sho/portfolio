@@ -26,11 +26,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="ja" className="h-full antialiased" suppressHydrationWarning>
       <head>
         {/* 描画前に付ける。JS が動く環境でだけ [data-reveal] を隠し、スクロールで浮かび上がらせる。
-            オープニング（Intro）は、動きを減らす設定でなく、このタブで初めて開いたときだけ出す。
+            オープニング（Intro）は、動きを減らす設定でなければ、開くたび・再読み込みのたびに出す。
             クリックすると飛ばせる */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var d=document.documentElement;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('reveal-ready');try{if(sessionStorage.getItem('intro-seen'))return;sessionStorage.setItem('intro-seen','1')}catch(e){}d.classList.add('intro');addEventListener('DOMContentLoaded',function(){var e=document.getElementById('intro');if(e)e.addEventListener('click',function(){d.classList.remove('intro')})})})()`,
+            __html: `(function(){var d=document.documentElement;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('reveal-ready');d.classList.add('intro');addEventListener('DOMContentLoaded',function(){var e=document.getElementById('intro');if(e)e.addEventListener('click',function(){d.classList.remove('intro')})})})()`,
           }}
         />
       </head>
