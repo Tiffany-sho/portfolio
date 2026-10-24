@@ -18,7 +18,7 @@ const url = (s, square = false) =>
 const browser = await chromium.launch();
 const page = await browser.newPage();
 
-// 縮小ではなく、それぞれの大きさで描き直す（ブラウザの文字のヒンティングが効いて、小さくてもにじみにくい）
+// 縮小ではなく、それぞれの大きさで描き直す（小さいサイズでは輪郭を単純にし線を太くできるうえ、にじみにくい）
 async function render(s, square = false) {
   await page.setViewportSize({ width: s, height: s });
   await page.goto(url(s, square), { waitUntil: "networkidle" });

@@ -400,7 +400,19 @@ export default function Home() {
       </main>
 
       <footer className="bg-teal-deep pb-8 text-center text-xs text-white/60">
-        © 2026 {site.shopName} / {site.nameEn}
+        <p>© 2026 {site.shopName} / {site.nameEn}</p>
+        {/* アイコンの琵琶湖の輪郭は OpenStreetMap の湖岸線から作った（ODbL のため出典を書く） */}
+        <p className="mt-2 text-[11px]">
+          アイコンの琵琶湖の形：
+          <a
+            href="https://www.openstreetmap.org/copyright"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-white"
+          >
+            © OpenStreetMap contributors
+          </a>
+        </p>
       </footer>
     </>
   );
