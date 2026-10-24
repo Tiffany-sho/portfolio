@@ -52,6 +52,11 @@ body {
    prefers-reduced-motion が reduce の人には一切動かさない（末尾）。 */
 :root {
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+  /* オープニングを出すとき（html.intro）は、その分だけファーストビューの演出を遅らせる */
+  --after-intro: 0s;
+}
+html.intro {
+  --after-intro: 2.9s;
 }
 
 @keyframes rise {
@@ -73,12 +78,12 @@ body {
 .hero-in h1 {
   animation: none;
 }
-.hero-in > :nth-child(1) { animation-delay: 0.1s; }
-.hero-in h1 > span:nth-child(1) { animation-delay: 0.25s; }
-.hero-in h1 > span:nth-child(2) { animation-delay: 0.4s; }
-.hero-in h1 > span:nth-child(3) { animation-delay: 0.55s; }
-.hero-in > :nth-child(3) { animation-delay: 0.75s; }
-.hero-in > :nth-child(4) { animation-delay: 0.9s; }
+.hero-in > :nth-child(1) { animation-delay: calc(var(--after-intro) + 0.1s); }
+.hero-in h1 > span:nth-child(1) { animation-delay: calc(var(--after-intro) + 0.25s); }
+.hero-in h1 > span:nth-child(2) { animation-delay: calc(var(--after-intro) + 0.4s); }
+.hero-in h1 > span:nth-child(3) { animation-delay: calc(var(--after-intro) + 0.55s); }
+.hero-in > :nth-child(3) { animation-delay: calc(var(--after-intro) + 0.75s); }
+.hero-in > :nth-child(4) { animation-delay: calc(var(--after-intro) + 0.9s); }
 
 /* 線画：ペンで描くように線を引く（各図形 pathLength=1） */
 @keyframes draw {
@@ -91,13 +96,83 @@ body {
      そうしないと丸い線端だけが点として先に見えてしまう */
   stroke-dasharray: 1 2;
   stroke-dashoffset: 1.05;
-  animation: draw 2.4s var(--ease-lux) forwards;
+  animation: draw 2.4s var(--ease-lux) var(--after-intro) forwards;
 }
-.draw > g:nth-of-type(1) * { animation-delay: 0.4s; }
+.draw > g:nth-of-type(1) * { animation-delay: calc(var(--after-intro) + 0.4s); }
 .draw > circle,
-.draw > path { animation-delay: 1s; }
+.draw > path { animation-delay: calc(var(--after-intro) + 1s); }
 .draw > g:nth-of-type(2) *,
-.draw > g:nth-of-type(3) * { animation-delay: 1.3s; }
+.draw > g:nth-of-type(3) * { animation-delay: calc(var(--after-intro) + 1.3s); }
+
+/* ---------- オープニング（components/Intro.tsx） ----------
+   0.2s〜1.9s 水色の線で琵琶湖を描く → 1.8s〜 屋号が浮かぶ → 2.7s〜3.5s 絵ごと拡大しながら薄くなって消える。
+   html.intro が無いとき（動きを減らす設定・同じタブで2回目・JS なし）は表示しない。
+   .intro という名前にすると html.intro 自体に当たってページごと消えるので、必ず .intro-overlay にする */
+.intro-overlay {
+  display: none;
+}
+html.intro .intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  cursor: pointer;
+  animation: intro-out 0.8s ease-in 2.7s forwards;
+}
+.intro-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: intro-zoom 0.8s ease-in 2.7s forwards;
+}
+.intro-lake {
+  height: clamp(150px, 30vh, 240px);
+  width: auto;
+  overflow: visible;
+}
+.intro-lake path {
+  fill: none;
+  stroke: #6aaecb; /* 水色。線の飾りなので文字のコントラスト基準の対象外 */
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1.05;
+  animation: draw 1.7s cubic-bezier(0.45, 0.05, 0.35, 1) 0.2s forwards;
+}
+.intro-name {
+  margin-top: 22px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--teal-deep);
+  opacity: 0;
+  animation: intro-name-in 0.7s var(--ease-lux) 1.8s forwards;
+}
+@keyframes intro-name-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes intro-zoom {
+  to {
+    transform: scale(1.5);
+  }
+}
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
 
 /* スクロールで浮かび上がる。html.reveal-ready（layout の先頭スクリプトが付ける）があるときだけ隠すので、
    JS が動かない環境では最初から全部見える */
