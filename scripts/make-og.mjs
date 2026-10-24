@@ -1,5 +1,6 @@
 // scripts/og.html から src/app/opengraph-image.png（1200x630）を作る。
-// 実行: node scripts/make-og.mjs （playwright はこのリポジトリの node_modules のものを使う）
+// 実行: npm install --no-save playwright && node scripts/make-og.mjs
+//   （playwright は package.json に入れていない。npm install をやり直すと消えるので、その都度入れ直す）
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
