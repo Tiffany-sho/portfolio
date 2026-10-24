@@ -105,7 +105,7 @@ html.intro {
 .draw > g:nth-of-type(3) * { animation-delay: calc(var(--after-intro) + 1.3s); }
 
 /* ---------- オープニング（components/Intro.tsx） ----------
-   0.2s〜1.9s 水色の線で琵琶湖を描く → 1.8s〜 屋号が浮かぶ → 2.7s〜3.5s 絵ごと拡大しながら薄くなって消える。
+   0.2s〜1.9s サイトの線画と同じ青緑の線で琵琶湖を描く → 1.8s〜 屋号が浮かぶ → 2.7s〜3.5s 絵ごと拡大しながら薄くなって消える。
    開くたび・再読み込みのたびに出す。html.intro が無いとき（動きを減らす設定・JS なし）は表示しない。
    .intro という名前にすると html.intro 自体に当たってページごと消えるので、必ず .intro-overlay にする */
 .intro-overlay {
@@ -135,7 +135,7 @@ html.intro .intro-overlay {
 }
 .intro-lake path {
   fill: none;
-  stroke: #6aaecb; /* 水色。線の飾りなので文字のコントラスト基準の対象外 */
+  stroke: var(--teal); /* サイトの線画（text-teal）と同じ色 */
   stroke-width: 1;
   stroke-linecap: round;
   stroke-linejoin: round;
